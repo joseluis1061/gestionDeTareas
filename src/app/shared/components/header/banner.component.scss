@@ -1,0 +1,62 @@
+.banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid red;
+
+  &__logo{
+    img{
+      width: 145px;
+    }
+  }
+  &__title{
+    border: 1px solid green;
+  }
+  &__nav {
+    border: 1px solid violet;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-list{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+  }
+}
+
+
+
+.nav-links {
+  display: none;
+  flex-direction: column;
+  background-color: #f9f9f9;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  z-index: 1;
+}
+
+.show {
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    flex-direction: row;
+  }
+
+  .nav-links {
+    display: flex;
+    position: static;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+}

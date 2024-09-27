@@ -1,0 +1,22 @@
+<header class="banner">
+  <div class="banner__logo">
+    <img src="assets/logo-velaio.png" alt="Logo aplicación">
+  </div>
+  <div class="banner__title">
+    <h1>{{ title }}</h1>
+  </div>
+  <nav class="banner__nav">
+    <button class="banner__menu-toggle" (click)="toggleMenu()">
+      <i class="fa-solid fa-bars"></i>
+      <fa-icon [icon]="faBars"></fa-icon>
+    </button>
+
+    <ul class="banner__nav-list" [ngClass]="{'banner__nav-list--show': isMenuOpen}">
+      <li><a href="#">Inicio</a></li>
+      <li><a href="#">Acerca de</a></li>
+      <li><a href="#">Contacto</a></li>
+
+      <a [routerLink]="['/search']" *ngIf="showSearch">Search</a>
+    </ul>
+  </nav>
+</header>
