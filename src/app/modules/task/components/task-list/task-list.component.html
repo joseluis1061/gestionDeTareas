@@ -1,3 +1,26 @@
-<section style="height: 100vh; background-color: rgb(253, 255, 127);">
-  <p>task-list works!</p>
+<section class="task-page">
+
+  <div class="filtros">
+    <li class="filter">Todas</li>
+    <li class="filter">Completadas</li>
+    <li class="filter">Oendientes</li>
+  </div>
+
+
+  <div class="task-list" *ngIf="taskList.length > 0">
+    <div class="task" *ngFor="let task of taskList">
+      <p>{{task.id}}</p>
+      <p>{{task.title}}</p>
+      <div *ngIf="task.persons.length > 0">
+        <div *ngFor="let person of task.persons">
+          <p>{{person.id}}</p>
+          <p>{{person.name}}</p>
+          <p>{{person.age}}</p>
+          <p>{{person.skills}}</p>
+        </div>
+
+      </div>
+      <p>{{task.complete}}</p>
+    </div>
+  </div>
 </section>

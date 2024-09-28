@@ -1,0 +1,33 @@
+.task-page{
+  background-color: rgb(201, 127, 36);
+  padding-bottom: 25px;
+}
+
+.filtros{
+  width: 100%;
+  background-color: burlywood;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.task-list{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+.task{
+  width: 25vw;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: var(--black-ligh);
+  border-radius: 20px;
+  color: white;
+}
