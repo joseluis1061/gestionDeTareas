@@ -29,6 +29,8 @@
 body {
   margin: 0;
   padding: 0;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
 }
 
 /**
@@ -45,7 +47,7 @@ main {
  */
 
 h1 {
-  font-size: 2em;
+  font-size: 2rem;
   margin: 0.67em 0;
 }
 
@@ -70,7 +72,7 @@ hr {
 
 pre {
   font-family: monospace, monospace; /* 1 */
-  font-size: 1em; /* 2 */
+  font-size: 1rem; /* 2 */
 }
 
 /* Text-level semantics
@@ -83,6 +85,7 @@ pre {
 a {
   background-color: transparent;
   text-decoration: none;
+  color: inherit;
 }
 
 a:active {
@@ -91,6 +94,11 @@ a:active {
 
 a:hover {
   outline: 0
+}
+
+ul{
+  padding: 0;
+  margin: 0;
 }
 
 li {

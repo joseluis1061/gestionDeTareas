@@ -5,18 +5,15 @@
   <div class="banner__title">
     <h1>{{ title }}</h1>
   </div>
-  <nav class="banner__nav">
-    <button class="banner__menu-toggle" (click)="toggleMenu()">
-      <i class="fa-solid fa-bars"></i>
-      <fa-icon [icon]="faBars"></fa-icon>
-    </button>
+  <button class="banner__menu-toggle" (click)="toggleMenu()">
+    <i class="fa-solid fa-bars"></i>
+    <fa-icon [icon]="faBars"></fa-icon>
+  </button>
 
-    <ul class="banner__nav-list" [ngClass]="{'banner__nav-list--show': isMenuOpen}">
-      <li><a href="#">Inicio</a></li>
-      <li><a href="#">Acerca de</a></li>
-      <li><a href="#">Contacto</a></li>
-
-      <a [routerLink]="['/search']" *ngIf="showSearch">Search</a>
+  <nav class="banner__nav" [ngClass]="{'active':isMenuOpen}">
+    <ul class="banner__nav-list">
+      <li><a routerLink="tasks" [routerLinkActive]="'active--link'" [routerLinkActiveOptions]="{ exact: true }">Tareas</a></li>
+      <li><a routerLink="tasks/new-task" [routerLinkActive]="'active--link'" [routerLinkActiveOptions]="{ exact: true }">Crear tarea</a></li>
     </ul>
   </nav>
 </header>
