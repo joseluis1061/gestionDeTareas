@@ -1,3 +1,81 @@
 <section style="height: 100vh; background-color: aquamarine;">
-  <p>task-form works!</p>
+  <div class="main-wrapper">
+    <div class="wrapper">
+      <button (click)="addPerson()" type="button">Agregar Persona</button>
+
+      <form [formGroup]="formTask" class="form-parent">
+        <div class="form-field">
+          <input
+            type="text"
+            placeholder="Ingresa tu nombre"
+            formControlName="taskName"
+          />
+        </div>
+
+        <div class="form-field">
+          <input
+            type="date"
+            placeholder="Ingresa una fecha"
+            formControlName="date"
+          />
+        </div>
+
+        <div class="form-grid" formArrayName="persons">
+          <div
+            class="form-field" *ngFor="let skill of getCtrl('persons', formTask).controls; index as formChild" >
+            <!-- formGroupName es el nombre de referencia del input -->
+            <!-- formChild es el indice -->
+            <div class="form-block" [formGroupName]="formChild">
+              <div class="form-field">
+                <input
+                  type="text"
+                  placeholder="Nombre completo"
+                  formControlName="personName"
+                />
+              </div>
+
+              <div class="form-field">
+                <input
+                  type="number"
+                  placeholder="Edad"
+                  formControlName="age"
+                />
+              </div>
+
+              <div class="form-field">
+                <input
+                  type="text"
+                  placeholder="Habilidades"
+                  formControlName="personSkills"
+                />
+              </div>
+
+
+              <!-- indice y la propiedad que deseo modificar language -->
+              <button (click)="removeValidation(formChild, 'language')">
+                Remove
+              </button>
+              <button (click)="addValidation(formChild, 'language')">Add</button>
+
+              <button (click)="deletePerson(formChild)" type="button" style="background-color: rgb(92, 8, 8); color: white;">Eliminar Persona</button>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="task__controls">
+          <button (click)="addPerson()" type="button" style="background-color: rgb(57, 92, 8); color: white;">Agregar Persona</button>
+        </div>
+      </form>
+    </div>
+    <div class="wrapper">
+      <div>
+        <b>Es valido el fomulario?: </b>
+        <span *ngIf="formTask.valid">✔</span>
+        <span *ngIf="!formTask.valid">🔴</span>
+      </div>
+      <pre>{{ formTask.value | json }}</pre>
+    </div>
+  </div>
+
 </section>

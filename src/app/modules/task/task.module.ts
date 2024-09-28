@@ -8,6 +8,8 @@ import { TaskFormComponent } from './components/task-form/task-form.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     TaskListComponent,
@@ -17,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     RouterModule,
     TaskRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ]
 })
 export class TaskModule { }

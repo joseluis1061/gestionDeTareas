@@ -6,11 +6,11 @@ import { TaskFormComponent } from './components/task-form/task-form.component';
 const routes: Routes = [
   {
     path: '',
-    component: TaskListComponent
+    component: TaskFormComponent
   },
   {
     path: 'new-task',
-    component: TaskFormComponent
+    component: TaskListComponent
   }
 ];
 
