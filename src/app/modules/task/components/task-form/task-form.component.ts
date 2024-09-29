@@ -3,6 +3,7 @@ import { FormArray, FormControl, FormGroup, ValidationErrors, Validators } from 
 import { TaskService } from 'src/app/core/service/task.service';
 import { ActivatedRoute } from '@angular/router';
 import { ITask } from 'src/app/models/task.model';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface TaskFormData {
   taskName: string;
@@ -22,6 +23,7 @@ interface PersonFormData {
   styleUrls: ['./task-form.component.scss'],
 })
 export class TaskFormComponent {
+  faTrash = faTrash;
   // Declara e Inicializamos la variable
   public formTask: FormGroup = new FormGroup({});
   taskUpdate!: ITask;
