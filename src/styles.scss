@@ -119,7 +119,11 @@ section{
   padding: 0.5rem 1rem;
   margin: 0;
 }
-
+@media (min-width: 768px) {
+  form-btn{
+    margin-bottom: 15px;
+  }
+}
 .btn:hover{
   text-decoration: underline;
 }
@@ -155,4 +159,8 @@ section{
 }
 .btn-black:hover{
   background-color: var(--black-light);
+}
+
+.alert-danger{
+  background-color: #ffaba5;
 }

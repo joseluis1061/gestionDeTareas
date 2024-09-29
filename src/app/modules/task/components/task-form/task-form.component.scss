@@ -6,85 +6,72 @@
     font-weight: 700;
     display: block;
   }
-}
 
+  .formtask__wrapper {
+    // margin: 5rem 2.5rem 2.5rem 2.5rem;
+    background-color: var(--white);
+    padding: .5rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+    gap: 1rem;
+    min-height: 80vh;
+    max-width: 850px;
+    border: solid 2px #1a1a1a;
 
-.formtask__wrapper {
-  // margin: 5rem 2.5rem 2.5rem 2.5rem;
-  background-color: var(--white);
-  padding: .5rem;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border-radius: 10px;
-  gap: 1rem;
-  min-height: 80vh;
-  max-width: 850px;
-  border: solid 2px #1a1a1a
-}
+    .form {
+      height: 100%;
+      padding: .5rem;
+      border-radius: 5px;
 
-.form-parent {
-  height: 100%;
-  padding: .5rem;
-  border-radius: 5px;
-}
+      &-field {
+        display: flex;
+        flex-wrap: wrap;
+      }
 
-.form-field {
-  display: flex;
-  flex-wrap: wrap;
-}
+      &-field input {
+        margin: .5rem 0;
+        border: solid 2px #1a1a1a;
+        border-radius: 5px;
+        width: 100%;
+      }
 
-.form-field input {
-  margin: .5rem 0;
-  border: solid 2px #1a1a1a;
-  border-radius: 5px;
-  width: 100%;
-}
+      &-field-compose{
+        display: flex;
+      }
+      &-field-compose input {
+        margin: 0;
+        border: solid 2px #1a1a1a;
+        border-radius: 5px;
+        width: 90%;
+      }
 
-.form-field-compose{
-  display: flex;
-}
-.form-field-compose input {
-  margin: 0;
-  border: solid 2px #1a1a1a;
-  border-radius: 5px;
-  width: 90%;
-}
+      &-person-controls{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
 
+      &-field-compose-btn{
+        width: 10%;
+        fa-icon{
+          color: var(--danger);
+        }
+      }
 
-@media (min-width: 768px) {
-  .form-btn{
-    margin-bottom: 15px;
+      &-grid {
+        display: flex;
+        flex-wrap: wrap;
+        padding: .5rem;
+        gap: .5rem;
+        border-radius: 5px;
+      }
+
+      &-block {
+        padding: .5rem;
+        background-color: var(--gray);
+        border-radius: 5px;
+      }
+    }
+
   }
-}
-
-.form-person-controls{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-
-
-.form-field-compose-btn{
-  width: 10%;
-  fa-icon{
-    color: var(--danger);
-  }
-}
-
-.form-grid {
-  display: flex;
-  flex-wrap: wrap;
-  padding: .5rem;
-  gap: .5rem;
-  border-radius: 5px;
-}
-
-.form-block {
-  padding: .5rem;
-  background-color: var(--gray);
-  border-radius: 5px;
-}
-
-.alert-danger{
-  background-color: #ffaba5;
 }
