@@ -24,7 +24,6 @@ interface PersonFormData {
 })
 export class TaskFormComponent {
   faTrash = faTrash;
-  // Declara e Inicializamos la variable
   public formTask: FormGroup = new FormGroup({});
   taskUpdate!: ITask;
 
@@ -40,19 +39,16 @@ export class TaskFormComponent {
   }
 
   initFormTask(): void {
-    // Valores de la propiedad repetitiva se inicializa
     this.formTask = new FormGroup({
       taskName: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
       ]),
       taskDate: new FormControl('', [Validators.required]),
-      persons: new FormArray([], [Validators.required, this.validateUniqueNames.bind(this)]) //Esta es la propiedad variable en datos
+      persons: new FormArray([], [Validators.required, this.validateUniqueNames.bind(this)])
     });
   }
 
-  // Este inicializa los valores del formulario dinamico
-  // Cada vez que se llame me agregara un nuevo campo con estas propiedades
   initFormPerson(): FormGroup {
     // Retorna el formulario que estará anidado
     return new FormGroup({
@@ -64,17 +60,12 @@ export class TaskFormComponent {
 
   //Agrega un nuevo formulario anidado de Persona
   addPerson(): void {
-    // Llama por referencia el input del formulario padre que es un array
     const refPersons = this.formTask.get('persons') as FormArray;
-    // Para poder agregarle nuevos valores de formulario dinamico
-    // Cada vez que se llama le inyecta un nuevo campo de skills
     refPersons.push(this.initFormPerson());
   }
 
   deletePerson(index: number): void {
-    // Obtener una referencia al FormArray de personas
     const personsFormArray = this.formTask.get('persons') as FormArray;
-    // Remover el elemento en el índice especificado
     personsFormArray.removeAt(index);
   }
 
@@ -87,7 +78,6 @@ export class TaskFormComponent {
   }
 
   initFormSkill(): FormGroup {
-    // Retorna el formulario que estará anidado
     return new FormGroup({
       skill: new FormControl('', [Validators.required])
     });
@@ -100,8 +90,7 @@ export class TaskFormComponent {
     skillsFormArray.removeAt(indexSkill);
   }
 
-  // Referencia cada campo que se crea en el html para
-  // poder acceder a sus propiedades y manipularlo
+  // Referencia cada campo que se crea en el html
   getCtrl(key: string, form: FormGroup): any {
     return form.get(key);
   }
@@ -120,23 +109,28 @@ export class TaskFormComponent {
   }
 
   onSubmit() {
-    // TODO: Usar EventEmitter con valor de formulario
     console.log("ENVIAR")
     // console.warn(this.formTask.value);
-
-    if (this.formTask.valid) {
-      const taskData = this.formTask.value;
-      taskData.complete = false;
-      this.taskService.createTask(taskData)
-        .subscribe({
-          next: (response) => {
-            console.log('Tarea creada exitosamente?:', response);
-            this.taskService.addTask(response);
-          },
-          error: (error) => {
+    if (!this.formTask.valid) {
+      alert("Verifica tus campos");
+      return;
+    }
+    const taskData = this.formTask.value;
+    taskData.complete = false;
+    this.taskService.createTask(taskData)
+      .subscribe({
+        next: (response) => {
+          console.log('Tarea creada exitosamente?:', response);
+          this.taskService.addTask(response);
+          this.initFormTask();
+          this.initFormPerson();
+          this.initFormSkill();
+        },
+        error: (error) => {
+          alert("Verifica tus campos");
           console.error('Error al crear la tarea:', error);
         }
-      });
-    }
+    });
+
   }
 }
