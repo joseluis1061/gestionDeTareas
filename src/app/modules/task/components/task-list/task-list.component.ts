@@ -42,6 +42,8 @@ export class TaskListComponent implements OnInit{
     })
   }
 
-
+  changeTaskCompleteState(task: ITask){
+    console.log("Cambiar estado a la tarea: ", task);
+  }
 
 }

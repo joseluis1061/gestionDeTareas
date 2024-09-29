@@ -11,7 +11,7 @@
 
     <div class="task-list__item" *ngFor="let task of taskListView">
       <header class="task-header">
-        <p class="task-list__item__complete" [ngClass]="task.complete? 'task__complete': 'task__incomplete'">{{ task.complete }}</p>
+        <p class="task-list__item__complete" [ngClass]="task.complete? 'task__complete': 'task__incomplete'" (click)="changeTaskCompleteState(task)">{{ task.complete }}</p>
         <p class="task-list__item__name">{{ task.taskName }}</p>
         <p class="task-list__item__date">{{ task.taskDate }}</p>
       </header>
