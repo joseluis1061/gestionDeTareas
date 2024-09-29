@@ -1,15 +1,15 @@
 <section class="task-page">
 
   <div class="task-filters">
-    <li class="task__filters__option">Todas</li>
-    <li class="task__filters__option">Completadas</li>
-    <li class="task__filters__option">Pendientes</li>
+    <li class="task__filters__option" (click)="taskReset()">Todas</li>
+    <li class="task__filters__option" (click)="taskFilterComplete()">Completadas</li>
+    <li class="task__filters__option" (click)="taskFilterPending()">Pendientes</li>
   </div>
 
 
   <div class="task-list">
 
-    <div class="task-list__item" *ngFor="let task of taskList">
+    <div class="task-list__item" *ngFor="let task of taskListView">
       <header class="task-header">
         <p class="task-list__item__complete" [ngClass]="task.complete? 'task__complete': 'task__incomplete'">{{ task.complete }}</p>
         <p class="task-list__item__name">{{ task.taskName }}</p>

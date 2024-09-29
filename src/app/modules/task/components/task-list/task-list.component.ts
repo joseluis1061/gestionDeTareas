@@ -9,6 +9,7 @@ import { Subscription }from 'rxjs';
 })
 export class TaskListComponent implements OnInit{
   taskList: ITask[] = [];
+  taskListView: ITask[] = [];
   constructor(private taskService: TaskService){}
   private subTaskState$!: Subscription;
 
@@ -21,10 +22,24 @@ export class TaskListComponent implements OnInit{
       response => {
         console.log("Behavior Data component ",response)
         this.taskList = response;
+        this.taskListView = this.taskList;
       }
     )
+  }
 
+  taskReset(){
+    this.taskListView = this.taskList;
+  }
+  taskFilterComplete(){
+    this.taskListView = this.taskList.filter(task => {
+      return task.complete;
+    })
+  }
 
+  taskFilterPending(){
+    this.taskListView = this.taskList.filter(task => {
+      return !task.complete;
+    })
   }
 
 
