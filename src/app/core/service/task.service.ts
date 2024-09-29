@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient }from '@angular/common/http';
 import { ITask } from 'src/app/models/task.model';
-import { delay, Observable, of } from 'rxjs';
+import { BehaviorSubject, delay, Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
+  private baseUrl: string = "https://jsonplaceholder.typicode.com";
+
+  private taskList: ITask[] = [];
+  private taskListState = new BehaviorSubject<ITask[]>([]);
+  public taskListState$ =this.taskListState.asObservable();
+
 
   constructor(
     private http: HttpClient
   ) { }
-
 
 
   getTasks(): Observable<ITask[]> {
@@ -19,6 +24,7 @@ export class TaskService {
         id: 1,
         title: "Tarea 1",
         complete: false,
+        dateTask: "2024-09-27",
         persons: [
           {
             id: 1,
@@ -38,6 +44,7 @@ export class TaskService {
         id: 2,
         title: "Tarea 2",
         complete: true,
+        dateTask: "2024-09-29",
         persons: [
           {
             id: 3,
@@ -63,6 +70,7 @@ export class TaskService {
         id: 3,
         title: "Tarea 3",
         complete: false,
+        dateTask: "2024-10-10",
         persons: [
           {
             id: 6,
@@ -82,6 +90,7 @@ export class TaskService {
         id: 4,
         title: "Tarea 4",
         complete: true,
+        dateTask: "2024-10-15",
         persons: [
           {
             id: 8,
@@ -95,6 +104,7 @@ export class TaskService {
         id: 5,
         title: "Tarea 5",
         complete: false,
+        dateTask: "2024-10-21",
         persons: [{
           id: 6,
           name: "Sofía López",
@@ -104,5 +114,20 @@ export class TaskService {
       }
     ];
     return of(data).pipe(delay(1500))
+  }
+
+  createTask(task: ITask): Observable<any> {
+    console.log("CreateTaskService: ", task)
+    return this.http.post(`${this.baseUrl}/posts`, task);
+  }
+
+  updateTaskList(tasks: ITask[]) {
+    this.taskList = tasks;
+    this.taskListState.next(this.taskList);
+  }
+
+  addTask(tasks: ITask){
+    this.taskList.push(tasks);
+    this.taskListState.next(this.taskList);
   }
 }

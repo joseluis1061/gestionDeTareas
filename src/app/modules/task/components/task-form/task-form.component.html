@@ -3,13 +3,27 @@
     <div class="wrapper">
       <button (click)="addPerson()" type="button">Agregar Persona</button>
 
-      <form [formGroup]="formTask" class="form-parent">
+      <form [formGroup]="formTask" class="form-parent" (ngSubmit)="onSubmit()">
         <div class="form-field">
           <input
             type="text"
-            placeholder="Ingresa tu nombre"
-            formControlName="taskName"
+            placeholder="Nombre de la tarea"
+            [formControlName]="'taskName'"
           />
+
+          <!-- <div *ngIf="formTask.get('taskName')?.touched && formTask.get('taskName')?.hasError('required') && formTask.get('taskName')?.errors?.['required']" >
+            Este campo es requerido.
+          </div> -->
+
+          <div *ngIf="formTask.get('taskName')?.touched">
+            <div *ngIf="formTask.get('taskName')?.hasError('required')">
+              Este campo es requerido.
+            </div>
+            <div *ngIf="formTask.get('taskName')?.hasError('minLength')">
+              El nombre debe tener al menos 5 caracteres.
+            </div>
+          </div>
+
         </div>
 
         <div class="form-field">
@@ -21,8 +35,8 @@
         </div>
 
         <div class="form-grid" formArrayName="persons">
-          <div
-            class="form-field" *ngFor="let skill of getCtrl('persons', formTask).controls; index as formChild" >
+
+          <div class="form-field" *ngFor="let person of getCtrl('persons', formTask).controls; index as formChild" >
             <!-- formGroupName es el nombre de referencia del input -->
             <!-- formChild es el indice -->
             <div class="form-block" [formGroupName]="formChild">
@@ -42,21 +56,23 @@
                 />
               </div>
 
-              <div class="form-field">
-                <input
-                  type="text"
-                  placeholder="Habilidades"
-                  formControlName="personSkills"
-                />
+
+              <div class="form-grid" formArrayName="personSkills">
+                <div *ngFor="let skill of person.get('personSkills').controls; let skillFormReference = index">
+                  <!-- <input type="text" [formControlName]="skillFormReference"> -->
+                  <div class="form-field">
+                    <input
+                      type="text"
+                      placeholder="Habilidades"
+                      [formControlName]="skillFormReference"
+                    />
+                  </div>
+                  <button (click)="removeSkill(formChild, skillFormReference)">Eliminar</button>
+                </div>
               </div>
 
-
               <!-- indice y la propiedad que deseo modificar language -->
-              <button (click)="removeValidation(formChild, 'language')">
-                Remove
-              </button>
-              <button (click)="addValidation(formChild, 'language')">Add</button>
-
+              <button (click)="addSkill(formChild)" type="button" style="background-color: rgb(70, 92, 8); color: white;">Agregar Skill</button>
               <button (click)="deletePerson(formChild)" type="button" style="background-color: rgb(92, 8, 8); color: white;">Eliminar Persona</button>
 
             </div>
@@ -66,6 +82,10 @@
         <div class="task__controls">
           <button (click)="addPerson()" type="button" style="background-color: rgb(57, 92, 8); color: white;">Agregar Persona</button>
         </div>
+
+        <p>Complete the form to enable button.</p>
+        <!-- [disabled]="!formTask.valid" -->
+        <button type="submit">Submit</button>
       </form>
     </div>
     <div class="wrapper">
