@@ -15,24 +15,24 @@ gestor-de-tareas/
 │   ├── app/
 │   │   ├── modules/
 │   │   │   └── task/
-│   │   │       └── components
-│   │   │           └── task-form
-│   │   │           └── task-list
-│   │   ├── core/
-│   │   │   └── service
-│   │   │       └── task.service.ts
+│   │   │   │   └── components
+│   │   │   │   │   └── task-form
+│   │   │   │   │   └── task-list
+│   │   │   ├── core/
+│   │   │   │   └── service
+│   │   │   │   │   └── task.service.ts
 │   │   ├── models/
 │   │   │   └── person.model.ts
 │   │   │   └── task.model.ts
 │   │   ├── shared/
 │   │   │   └── components
-│   │   │       └── banner
+│   │   │   │   └── banner
 │   ├── assets/
 │   │   └── logo-velaio.png
 │   ├── styles/
 │   │   └── main.scss
 │   │   └── global
-│   │       └── reset.scss
+│   │   │   └── reset.scss
 │   ├── environments/
 │   └── index.html
 ├── node_modules/
@@ -50,7 +50,7 @@ Visualizar tareas: Muestra una lista de tareas filtrable por todas, terminadas y
 - El nombre no puede repetirse entre las personas asociadas a la misma tarea.
 - La edad debe ser mayor a 18 años.
  -Cada persona debe tener al menos una habilidad.
- 
+
 2. Validación del Arreglo Anidado (Habilidades):
 - El campo de habilidad no puede estar vacío.
 - Cada persona debe tener al menos una habilidad.
