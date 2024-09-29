@@ -11,10 +11,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { TaskCardComponent } from './components/task-card/task-card.component';
+
 @NgModule({
   declarations: [
     TaskListComponent,
-    TaskFormComponent
+    TaskFormComponent,
+    TaskCardComponent
   ],
   imports: [
     CommonModule,

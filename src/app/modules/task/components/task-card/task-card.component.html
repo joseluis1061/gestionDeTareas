@@ -1,0 +1,17 @@
+<div class="item" *ngFor="let task of taskListView">
+  <header class="item-header">
+    <button [ngClass]="task.complete? 'item__complete': 'item__incomplete'" (click)="changeTaskCompleteState(task)" type="button">{{ task.complete }}</button>
+    <h2 class="item__name">{{ task.taskName }}</h2>
+    <p class="item__date">{{ task.taskDate }}</p>
+  </header>
+  <!-- <p class="item__id">{{ task.id }}</p> -->
+
+  <div class="item__persons" *ngIf="task.persons.length > 0">
+    <div class="item__persons__person" *ngFor="let person of task.persons">
+      <p class="item__persons__person__name">{{ person.personName }} <span>({{ person.age }})</span></p>
+      <p class="item__persons__person__skills">{{ person.personSkills }}</p>
+      <br>
+    </div>
+  </div>
+  <!-- <button (click)="updateTask(task)" type="button">Actualizar</button> -->
+</div>
