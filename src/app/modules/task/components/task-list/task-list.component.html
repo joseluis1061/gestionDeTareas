@@ -1,26 +1,32 @@
 <section class="task-page">
 
-  <div class="filtros">
-    <li class="filter">Todas</li>
-    <li class="filter">Completadas</li>
-    <li class="filter">Oendientes</li>
+  <div class="task-filters">
+    <li class="task__filters__option">Todas</li>
+    <li class="task__filters__option">Completadas</li>
+    <li class="task__filters__option">Pendientes</li>
   </div>
 
 
-  <div class="task-list" *ngIf="taskList.length > 0">
-    <div class="task" *ngFor="let task of taskList">
-      <p>{{task.id}}</p>
-      <p>{{task.taskName}}</p>
-      <div *ngIf="task.persons.length > 0">
-        <div *ngFor="let person of task.persons">
-          <p>{{person.id}}</p>
-          <p>{{person.personName}}</p>
-          <p>{{person.age}}</p>
-          <p>{{person.personSkills}}</p>
-        </div>
+  <div class="task-list">
 
+    <div class="task-list__item" *ngFor="let task of taskList">
+      <header class="task-header">
+        <p class="task-list__item__complete" [ngClass]="task.complete? 'task__complete': 'task__incomplete'">{{ task.complete }}</p>
+        <p class="task-list__item__name">{{ task.taskName }}</p>
+        <p class="task-list__item__date">{{ task.taskDate }}</p>
+      </header>
+      <!-- <p class="task-list__item__id">{{ task.id }}</p> -->
+
+      <div class="task-list__item__persons" *ngIf="task.persons.length > 0">
+        <div class="task-list__item__persons__person" *ngFor="let person of task.persons">
+          <!-- <p class="task-list__item__persons__person__id">{{ person.id }}</p> -->
+          <p class="task-list__item__persons__person__name">{{ person.personName }} <span>({{ person.age }})</span></p>
+          <p class="task-list__item__persons__person__skills">{{ person.personSkills }}</p>
+          <br>
+        </div>
       </div>
-      <p>{{task.complete}}</p>
+
+
     </div>
   </div>
 </section>
