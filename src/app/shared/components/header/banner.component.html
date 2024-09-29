@@ -13,8 +13,8 @@
 
   <nav class="banner__nav" [ngClass]="{'active':isMenuOpen}">
     <ul class="banner__nav-list">
-      <li><a routerLink="tasks" [routerLinkActive]="'active--link'" [routerLinkActiveOptions]="{ exact: true }">Tareas</a></li>
-      <li><a routerLink="tasks/new-task" [routerLinkActive]="'active--link'" [routerLinkActiveOptions]="{ exact: true }">Crear tarea</a></li>
+      <li><a (click)="toggleMenu()" routerLink="tasks" [routerLinkActive]="'active--link'" [routerLinkActiveOptions]="{ exact: true }">Tareas</a></li>
+      <li><a (click)="toggleMenu()" routerLink="tasks/new-task" [routerLinkActive]="'active--link'" [routerLinkActiveOptions]="{ exact: true }">Crear tarea</a></li>
     </ul>
   </nav>
 </header>
