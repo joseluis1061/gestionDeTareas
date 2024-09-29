@@ -2,8 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import './styles/main';
 :root{
-  --black-ligh: #282828;
+  --black-light: #282828;
   --black-dark: #0c0c0c;
+  --blue-light: #93c5fd
+  --blue-dark: #1e40af;
   --white: #ffffff;
 }
 
@@ -24,8 +26,15 @@ body {
   font-optical-sizing: auto;
   font-size: 1rem;
 }
-h1,h2,h3,h4,h5,h6 {
-  margin:0;
+
+h1{
+  font-size: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  h1{
+    font-size: 2rem;
+  }
 }
 
 p {
@@ -79,8 +88,7 @@ section{
 }
 
 .active--link{
-  background-color: white;
-  color: black;
+  text-decoration: underline;
 }
 
 .btn:hover{
