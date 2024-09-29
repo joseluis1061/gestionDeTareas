@@ -10,13 +10,13 @@
   <div class="task-list" *ngIf="taskList.length > 0">
     <div class="task" *ngFor="let task of taskList">
       <p>{{task.id}}</p>
-      <p>{{task.title}}</p>
+      <p>{{task.taskName}}</p>
       <div *ngIf="task.persons.length > 0">
         <div *ngFor="let person of task.persons">
           <p>{{person.id}}</p>
-          <p>{{person.name}}</p>
+          <p>{{person.personName}}</p>
           <p>{{person.age}}</p>
-          <p>{{person.skills}}</p>
+          <p>{{person.personSkills}}</p>
         </div>
 
       </div>

@@ -30,7 +30,7 @@
           <input
             type="date"
             placeholder="Ingresa una fecha"
-            formControlName="date"
+            formControlName="taskDate"
           />
         </div>
 
@@ -56,10 +56,8 @@
                 />
               </div>
 
-
               <div class="form-grid" formArrayName="personSkills">
                 <div *ngFor="let skill of person.get('personSkills').controls; let skillFormReference = index">
-                  <!-- <input type="text" [formControlName]="skillFormReference"> -->
                   <div class="form-field">
                     <input
                       type="text"

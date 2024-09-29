@@ -38,7 +38,7 @@ export class TaskFormComponent {
         Validators.required,
         Validators.minLength(3),
       ]),
-      date: new FormControl('', [Validators.required]),
+      taskDate: new FormControl('', [Validators.required]),
       persons: new FormArray([], [Validators.required]) //Esta es la propiedad variable en datos
     });
   }
@@ -111,6 +111,7 @@ export class TaskFormComponent {
 
     if (this.formTask.valid) {
       const taskData = this.formTask.value;
+      taskData.complete = false;
       this.taskService.createTask(taskData)
         .subscribe({
           next: (response) => {

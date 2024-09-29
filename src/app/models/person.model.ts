@@ -1,6 +1,6 @@
 export interface IPerson {
   id: number;
-  name: string;
+  personName: string;
   age: number;
-  skills: string[];
+  personSkills: string[];
 }

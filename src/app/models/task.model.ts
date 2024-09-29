@@ -1,8 +1,8 @@
 import {IPerson} from "./person.model";
 export interface ITask {
   id: number;
-  title: string;
+  taskName: string;
   complete: boolean;
-  dateTask: string;
+  taskDate: string;
   persons: IPerson[];
 }

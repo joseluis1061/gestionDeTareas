@@ -22,94 +22,94 @@ export class TaskService {
     const data =       [
       {
         id: 1,
-        title: "Tarea 1",
+        taskName: "Tarea 1",
         complete: false,
-        dateTask: "2024-09-27",
+        taskDate: "2024-09-27",
         persons: [
           {
             id: 1,
-            name: "Juan Pérez",
+            personName: "Juan Pérez",
             age: 30,
-            skills: ["Angular", "TypeScript", "CSS"]
+            personSkills: ["Angular", "TypeScript", "CSS"]
           },
           {
             id: 2,
-            name: "María Gómez",
+            personName: "María Gómez",
             age: 25,
-            skills: ["Java", "Spring Boot", "Hibernate"]
+            personSkills: ["Java", "Spring Boot", "Hibernate"]
           }
         ]
       },
       {
         id: 2,
-        title: "Tarea 2",
+        taskName: "Tarea 2",
         complete: true,
-        dateTask: "2024-09-29",
+        taskDate: "2024-09-29",
         persons: [
           {
             id: 3,
-            name: "Carlos Rodríguez",
+            personName: "Carlos Rodríguez",
             age: 35,
-            skills: ["Python", "Django", "REST APIs"]
+            personSkills: ["Python", "Django", "REST APIs"]
           },
           {
             id: 4,
-            name: "Ana Martínez",
+            personName: "Ana Martínez",
             age: 28,
-            skills: ["JavaScript", "React", "Redux"]
+            personSkills: ["JavaScript", "React", "Redux"]
           },
           {
             id: 5,
-            name: "Luis Fernández",
+            personName: "Luis Fernández",
             age: 40,
-            skills: ["C#", ".NET", "Azure"]
+            personSkills: ["C#", ".NET", "Azure"]
           }
         ]
       },
       {
         id: 3,
-        title: "Tarea 3",
+        taskName: "Tarea 3",
         complete: false,
-        dateTask: "2024-10-10",
+        taskDate: "2024-10-10",
         persons: [
           {
             id: 6,
-            name: "Sofía López",
+            personName: "Sofía López",
             age: 22,
-            skills: ["HTML", "CSS", "JavaScript"]
+            personSkills: ["HTML", "CSS", "JavaScript"]
           },
           {
             id: 7,
-            name: "Miguel Torres",
+            personName: "Miguel Torres",
             age: 32,
-            skills: ["Node.js", "Express", "MongoDB"]
+            personSkills: ["Node.js", "Express", "MongoDB"]
           }
         ]
       },
       {
         id: 4,
-        title: "Tarea 4",
+        taskName: "Tarea 4",
         complete: true,
-        dateTask: "2024-10-15",
+        taskDate: "2024-10-15",
         persons: [
           {
             id: 8,
-            name: "Laura Ramírez",
+            personName: "Laura Ramírez",
             age: 27,
-            skills: ["Vue.js", "Vuex", "Vuetify"]
+            personSkills: ["Vue.js", "Vuex", "Vuetify"]
           }
         ]
       },
       {
         id: 5,
-        title: "Tarea 5",
+        taskName: "Tarea 5",
         complete: false,
-        dateTask: "2024-10-21",
+        taskDate: "2024-10-21",
         persons: [{
           id: 6,
-          name: "Sofía López",
+          personName: "Sofía López",
           age: 22,
-          skills: ["HTML", "CSS", "JavaScript"]
+          personSkills: ["HTML", "CSS", "JavaScript"]
         }]
       }
     ];
