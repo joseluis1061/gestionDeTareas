@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/core/service/task.service';
 import { ITask } from 'src/app/models/task.model';
+import { Router } from '@angular/router';
 import { Subscription }from 'rxjs';
 @Component({
   selector: 'app-task-list',
@@ -10,14 +11,14 @@ import { Subscription }from 'rxjs';
 export class TaskListComponent implements OnInit{
   taskList: ITask[] = [];
   taskListView: ITask[] = [];
-  constructor(private taskService: TaskService){}
+  constructor(
+    private taskService: TaskService,
+    private router: Router
+  ){}
   private subTaskState$!: Subscription;
 
 
   ngOnInit(): void {
-    // this.taskService.taskList$.subscribe(tasks => {
-    //   this.tasks = tasks;
-    // });
     this.subTaskState$ = this.taskService.taskListState$.subscribe(
       response => {
         console.log("Behavior Data component ",response)
@@ -44,6 +45,13 @@ export class TaskListComponent implements OnInit{
 
   changeTaskCompleteState(task: ITask){
     console.log("Cambiar estado a la tarea: ", task);
+    task.complete = !task.complete;
+    this.taskService.updateTask(task);
+  }
+
+  updateTask(task: ITask){
+    console.log("Actualizar: ", task);
+    this.router.navigate(['/tasks/new-task'], { state: { task } });
   }
 
 }

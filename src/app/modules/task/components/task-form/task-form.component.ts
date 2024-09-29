@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { TaskService } from 'src/app/core/service/task.service';
+import { ActivatedRoute } from '@angular/router';
+import { ITask } from 'src/app/models/task.model';
 
 interface TaskFormData {
   taskName: string;
@@ -22,12 +24,16 @@ interface PersonFormData {
 export class TaskFormComponent {
   // Declara e Inicializamos la variable
   public formTask: FormGroup = new FormGroup({});
+  taskUpdate!: ITask;
 
   constructor(
-    private taskService:TaskService
+    private taskService:TaskService,
+    private route: ActivatedRoute
   ){}
 
   ngOnInit(): void {
+    // this.taskUpdate = this.route.snapshot.data['state'].task;
+    // console.log("Actualizar: ", this.taskUpdate);
     this.initFormTask();
   }
 
@@ -39,7 +45,7 @@ export class TaskFormComponent {
         Validators.minLength(3),
       ]),
       taskDate: new FormControl('', [Validators.required]),
-      persons: new FormArray([], [Validators.required]) //Esta es la propiedad variable en datos
+      persons: new FormArray([], [Validators.required, this.validateUniqueNames.bind(this)]) //Esta es la propiedad variable en datos
     });
   }
 
@@ -99,9 +105,16 @@ export class TaskFormComponent {
   }
 
   // Validador personalizado para verificar el formato de fecha DD/MM/AAAA
-  dateValidator(control: FormControl) {
-    const fechaRegex = /^\d{2}\/\d{2}\/\d{4}$/;
-    return fechaRegex.test(control.value) ? null : { fechaInvalida: true };
+  dateValidator(control: FormControl): ValidationErrors | null  {
+    const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+    return dateRegex.test(control.value) ? null : { fechaInvalida: true };
+  }
+
+  validateUniqueNames(control: FormArray): ValidationErrors | null {
+    const personNames = control.controls.map(personForm => personForm.get('personName')?.value);
+    const uniqueNames = [...new Set(personNames)];
+
+    return uniqueNames.length < control.length ? { duplicateNames: true } : null;
   }
 
   onSubmit() {

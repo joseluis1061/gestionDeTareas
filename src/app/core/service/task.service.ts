@@ -126,8 +126,20 @@ export class TaskService {
     this.taskListState.next(this.taskList);
   }
 
+  updateTask(task: ITask){
+    const targetTask = this.taskList.map(item => {
+      if(item.id !== task.id){
+        return item;
+      }
+      return task;
+    });
+    this.taskList = targetTask;
+    this.taskListState.next(this.taskList);
+  }
+
   addTask(tasks: ITask){
     this.taskList.push(tasks);
     this.taskListState.next(this.taskList);
   }
+
 }
