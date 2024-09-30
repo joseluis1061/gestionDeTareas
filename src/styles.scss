@@ -101,8 +101,8 @@ button{
 section{
   height: auto;
   min-height: calc(100vh - var(--banner-height));
-  margin-top: var(--banner-height);
-  width: 100%;
+  // margin-top: var(--banner-height);
+  width: 100vw;
 }
 
 .btn{

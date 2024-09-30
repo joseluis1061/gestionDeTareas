@@ -9,7 +9,7 @@ import { ITask } from 'src/app/models/task.model';
   styleUrls: ['./task-card.component.scss']
 })
 export class TaskCardComponent {
-  @Input() taskListView: ITask[] = [];
+  @Input() task!: ITask;
 
   constructor(
     private taskService:TaskService,
@@ -30,6 +30,4 @@ export class TaskCardComponent {
     console.log("Actualizar: ", task);
     this.router.navigate(['/tasks/new-task'], { state: { task } });
   }
-
-
 }

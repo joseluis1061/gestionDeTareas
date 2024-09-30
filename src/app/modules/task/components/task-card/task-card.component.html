@@ -1,4 +1,4 @@
-<div class="item" *ngFor="let task of taskListView">
+<div class="item">
   <header class="item-header">
     <button [ngClass]="task.complete? 'item__complete': 'item__incomplete'" (click)="changeTaskCompleteState(task)" type="button">{{ task.complete }}</button>
     <h2 class="item__name">{{ task.taskName }}</h2>

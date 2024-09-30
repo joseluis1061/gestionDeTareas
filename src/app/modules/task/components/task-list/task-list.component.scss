@@ -1,25 +1,51 @@
 .task{
   background-color: var(--gray);
-  padding-bottom: 25px;
+  padding: 1rem 2rem;
 
-  &-filters{
+  &__filters{
     width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    padding: 1rem 0;
     gap: 1rem;
-    padding: 1em 2em;
+    &__option{
+      text-decoration: none;
+      transition: text-decoration 0.5 ease-in-out;
+    }
+    &__option:hover{
+      text-decoration: underline;
+
+    }
+  }
+  &__title{
+    margin-bottom: 1rem;
   }
 
   &-list{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
+    gap: 1rem;
+
+    &-item{
+      width: 100%;
+      margin-bottom: 1rem;
+    }
   }
 
-  &-list-item{
-    width: 90%;
+
+
+  @media (min-width: 768px) {
+    &-list{
+      &-item{
+        width: calc(50% - 1rem);
+        margin-bottom: 1rem;
+      }
+    }
   }
+
+
 }
