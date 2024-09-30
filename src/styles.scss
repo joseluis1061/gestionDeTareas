@@ -12,6 +12,8 @@
   --success-dark: rgb(47, 255, 186);
   --danger: rgb(190, 64, 33);
   --danger-dark:rgb(255, 89, 47);
+
+  --banner-height: 50px;
 }
 
 html {
@@ -98,7 +100,8 @@ button{
 
 section{
   height: auto;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--banner-height));
+  margin-top: var(--banner-height);
   width: 100%;
 }
 
