@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient }from '@angular/common/http';
 import { ITask } from 'src/app/models/task.model';
-import { BehaviorSubject, delay, Observable, of } from 'rxjs';
+import { BehaviorSubject, delay, Observable, of, map, tap } from 'rxjs';
 import { initTaskList } from '../data/initTaskList.data';
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,11 @@ export class TaskService {
 
   createTask(task: ITask): Observable<any> {
     console.log("CreateTaskService: ", task)
-    return this.http.post(`${this.baseUrl}/posts`, task);
+    return this.http.post<ITask>(`${this.baseUrl}/posts`, task).pipe(
+      tap(response => {
+        response.id = Math.floor(Math.random() * (99999999 - 2 + 1)) + 2;
+      })
+    );
   }
 
   updateTaskList(tasks: ITask[]) {
