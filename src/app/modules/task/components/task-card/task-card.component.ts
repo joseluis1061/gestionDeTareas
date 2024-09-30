@@ -26,8 +26,7 @@ export class TaskCardComponent {
     this.taskService.updateTask(task);
   }
 
-  updateTask(task: ITask){
-    console.log("Actualizar: ", task);
-    this.router.navigate(['/tasks/new-task'], { state: { task } });
+  updateTask(){
+    //this.router.navigate(['/tasks/new-task', this.task]);
   }
 }

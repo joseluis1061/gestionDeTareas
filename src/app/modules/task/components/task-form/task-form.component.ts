@@ -4,6 +4,7 @@ import { TaskService } from 'src/app/core/service/task.service';
 import { ActivatedRoute } from '@angular/router';
 import { ITask } from 'src/app/models/task.model';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IPerson } from 'src/app/models/person.model';
 
 interface TaskFormData {
   taskName: string;
@@ -25,7 +26,8 @@ interface PersonFormData {
 export class TaskFormComponent {
   faTrash = faTrash;
   public formTask: FormGroup = new FormGroup({});
-  taskUpdate!: ITask;
+  taskUpdate: ITask | null = null;
+  title: string = "Crear tarea";
 
   constructor(
     private taskService:TaskService,
@@ -33,8 +35,14 @@ export class TaskFormComponent {
   ){}
 
   ngOnInit(): void {
-    // this.taskUpdate = this.route.snapshot.data['state'].task;
-    // console.log("Actualizar: ", this.taskUpdate);
+    this.route.params.subscribe({
+      next: param => {
+        console.log("UPDATE: ", param)
+        this.taskUpdate = param as ITask;
+      },
+      error: error => console.log("Algo salio mal en la actualización")
+    });
+
     this.initFormTask();
   }
 
@@ -50,7 +58,6 @@ export class TaskFormComponent {
   }
 
   initFormPerson(): FormGroup {
-    // Retorna el formulario que estará anidado
     return new FormGroup({
       personName: new FormControl('', [Validators.required]),
       age: new FormControl('', [Validators.required, Validators.min(18)]),
@@ -109,7 +116,6 @@ export class TaskFormComponent {
   }
 
   onSubmit() {
-    console.log("ENVIAR")
     // console.warn(this.formTask.value);
     if (!this.formTask.valid) {
       alert("Verifica tus campos");
