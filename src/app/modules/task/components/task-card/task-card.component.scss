@@ -54,6 +54,11 @@
     }
   }
 
+  &__update{
+    margin: 1rem 1rem;
+    align-self: flex-end;
+  }
+
   @media (min-width: 768px) {
     &__persons{
       flex-direction: row;

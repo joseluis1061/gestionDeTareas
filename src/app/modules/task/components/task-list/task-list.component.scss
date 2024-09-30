@@ -1,13 +1,17 @@
 .task{
   background-color: var(--gray);
-  padding: 1rem 2rem;
+  padding: 0 2rem 1rem 2rem;
 
   &__filters{
+    position: sticky;
+    top: var(--banner-height);
+    left: 0;
     width: 100%;
+    background-color: var(--gray);
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 1rem 0;
+    padding: 1rem 0 2rem 1rem;
     gap: 1rem;
     &__option{
       text-decoration: none;
