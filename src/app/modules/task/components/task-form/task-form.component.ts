@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ITask } from 'src/app/models/task.model';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IPerson } from 'src/app/models/person.model';
+import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
@@ -17,8 +18,8 @@ export class TaskFormComponent {
   title: string = "Crear tarea";
 
   constructor(
-    private taskService:TaskService,
-    private route: ActivatedRoute
+    private taskService: TaskService,
+    private formBuilder: FormBuilder
   ){}
 
   ngOnInit(): void {
@@ -30,8 +31,9 @@ export class TaskFormComponent {
       error: error => console.log("Algo salio mal en la actualización")
     });
 
+    this.initFormTask();
     if(this.taskService === null){
-      this.initFormTask();
+      console.log("Crear el formulario inicial")
     }
     // else{
     //   this.updateFormTask();
@@ -42,19 +44,17 @@ export class TaskFormComponent {
   }
 
   initFormTask(): void {
+
     this.formTask = new FormGroup({
-      taskName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      taskDate: new FormControl('', [Validators.required]),
+      taskName: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      taskDate: new FormControl('', [Validators.required]), //, this.dateValidator.bind(this)
       persons: new FormArray([], [Validators.required, this.validateUniqueNames.bind(this)])
     });
   }
 
   initFormPerson(): FormGroup {
     return new FormGroup({
-      personName: new FormControl('', [Validators.required]),
+      personName: new FormControl('', [Validators.required, Validators.minLength(2)]),
       age: new FormControl('', [Validators.required, Validators.min(18)]),
       personSkills: new FormArray([], [Validators.required, Validators.minLength(1)])
     });
@@ -145,6 +145,7 @@ export class TaskFormComponent {
     // console.warn(this.formTask.value);
     if (!this.formTask.valid) {
       alert("Verifica tus campos");
+
       return;
     }
     const taskData = this.formTask.value;

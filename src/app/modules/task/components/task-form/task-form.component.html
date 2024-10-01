@@ -1,7 +1,6 @@
 <section class="formtask">
   <h2>Crear tarea</h2>
   <div class="formtask__wrapper">
-    <!-- <button (click)="addPerson()" type="button">Agregar Persona</button> -->
 
     <form [formGroup]="formTask" class="form" (ngSubmit)="onSubmit()">
       <div class="form-field">
@@ -11,16 +10,14 @@
           formControlName="taskName"
         />
 
-
-        <div *ngIf="formTask.get('taskName')?.touched">
-          <div *ngIf="formTask.get('taskName')?.hasError('required')">
-            Este campo es requerido.
-          </div>
-          <div *ngIf="formTask.get('taskName')?.hasError('minLength')">
+        <div *ngIf="formTask.get('taskName')?.invalid && formTask.get('taskName')?.touched" >
+          <div *ngIf="formTask.get('taskName')?.hasError('minlength')" style="color: red;">
             El nombre debe tener al menos 5 caracteres.
           </div>
+          <div *ngIf="formTask.get('taskName')?.hasError('required')" style="color: red;">
+            Este campo es requerido.
+          </div>
         </div>
-
       </div>
 
       <div class="form-field">
@@ -29,6 +26,15 @@
           placeholder="Ingresa una fecha"
           formControlName="taskDate"
         />
+
+        <div *ngIf="formTask.get('taskDate')?.invalid && formTask.get('taskDate')?.touched" >
+          <div *ngIf="formTask.get('taskDate')?.hasError('dateValidator')" style="color: red;">
+            La fecha debe tener dia/mes/año.
+          </div>
+          <div *ngIf="formTask.get('taskDate')?.hasError('required')" style="color: red;">
+            Este campo es requerido.
+          </div>
+        </div>
       </div>
 
       <hr>
@@ -43,6 +49,15 @@
                 placeholder="Nombre completo"
                 formControlName="personName"
               />
+
+              <div *ngIf="person.get('personName')?.invalid && person.get('personName')?.touched" >
+                <div *ngIf="person.get('personName')?.hasError('minlength')" style="color: red;">
+                  El nombre debe tener al menos 5 caracteres.
+                </div>
+                <div *ngIf="person.get('personName')?.hasError('required')" style="color: red;">
+                  Este campo es requerido.
+                </div>
+              </div>
             </div>
 
             <div class="form-field">
@@ -51,10 +66,19 @@
                 placeholder="Edad"
                 formControlName="age"
               />
+
+              <div *ngIf="person.get('age')?.invalid && person.get('age')?.touched" >
+                <div *ngIf="person.get('age')?.hasError('min')" style="color: red;">
+                  Debe ser mayor de 18 años.
+                </div>
+                <div *ngIf="person.get('age')?.hasError('required')" style="color: red;">
+                  Este campo es requerido.
+                </div>
+              </div>
             </div>
 
             <div class="form-grid" formArrayName="personSkills">
-              <div *ngFor="let skill of person.get('personSkills').controls; let skillFormReference = index">
+              <div *ngFor="let skill of person.get('personSkills').controls; index as skillFormReference">
                 <div class="form-field-compose">
                   <input
                     type="text"
