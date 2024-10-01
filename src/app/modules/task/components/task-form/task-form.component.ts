@@ -5,19 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ITask } from 'src/app/models/task.model';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IPerson } from 'src/app/models/person.model';
-
-interface TaskFormData {
-  taskName: string;
-  date: Date;
-  persons: PersonFormData[];
-}
-
-interface PersonFormData {
-  personName: string;
-  age: number;
-  personSkills: string[];
-}
-
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
@@ -35,15 +22,23 @@ export class TaskFormComponent {
   ){}
 
   ngOnInit(): void {
-    this.route.params.subscribe({
+    this.taskService.taskSelectedState$.subscribe({
       next: param => {
-        console.log("UPDATE: ", param)
-        this.taskUpdate = param as ITask;
+        this.taskUpdate = param;
+        console.log(this.taskUpdate);
       },
       error: error => console.log("Algo salio mal en la actualización")
     });
 
-    this.initFormTask();
+    if(this.taskService === null){
+      this.initFormTask();
+    }
+    // else{
+    //   this.updateFormTask();
+    //   this.updateFormPerson();
+    //   this.updateFormSkill();
+    // }
+
   }
 
   initFormTask(): void {
@@ -113,6 +108,37 @@ export class TaskFormComponent {
     const uniqueNames = [...new Set(personNames)];
 
     return uniqueNames.length < control.length ? { duplicateNames: true } : null;
+  }
+
+  // Update
+  updateFormTask(): void {
+    this.formTask = new FormGroup({
+      taskName: new FormControl(this.taskUpdate?.taskName, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      taskDate: new FormControl(this.taskUpdate?.taskDate, [Validators.required]),
+      persons: new FormArray([], [Validators.required, this.validateUniqueNames.bind(this)])
+    });
+  }
+
+  updateFormPerson() {
+    this.taskUpdate?.persons.forEach(person => {
+      return new FormGroup({
+        personName: new FormControl(person.personName, [Validators.required]),
+        age: new FormControl(person.age, [Validators.required, Validators.min(18)]),
+        personSkills: new FormArray([], [Validators.required, Validators.minLength(1)])
+      });
+    })
+
+  }
+
+  updateFormSkill() {
+    this.taskUpdate?.persons.forEach(person => {
+      return new FormGroup({
+        skill: new FormControl(person.personSkills, [Validators.required])
+      });
+    })
   }
 
   onSubmit() {

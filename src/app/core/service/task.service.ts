@@ -13,6 +13,10 @@ export class TaskService {
   private taskListState = new BehaviorSubject<ITask[]>([]);
   public taskListState$ =this.taskListState.asObservable();
 
+  // private taskSelect!: ITask;
+  private taskSelectedState = new BehaviorSubject<ITask | null>(null);
+  public taskSelectedState$ =this.taskSelectedState.asObservable();
+
 
   constructor(
     private http: HttpClient
@@ -51,6 +55,10 @@ export class TaskService {
   addTask(tasks: ITask){
     this.taskList.push(tasks);
     this.taskListState.next(this.taskList);
+  }
+
+  setTaskSelect(data: ITask) {
+    this.taskSelectedState.next(data);
   }
 
 }

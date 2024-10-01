@@ -16,10 +16,6 @@ export class TaskCardComponent {
     private router: Router
   ){}
 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   throw new Error('Method not implemented.');
-  // }
-
   changeTaskCompleteState(task: ITask){
     console.log("Cambiar estado a la tarea: ", task);
     task.complete = !task.complete;
@@ -27,6 +23,7 @@ export class TaskCardComponent {
   }
 
   updateTask(){
-    //this.router.navigate(['/tasks/new-task', this.task]);
+    this.taskService.setTaskSelect(this.task);
+    this.router.navigate(['/tasks/new-task']);
   }
 }

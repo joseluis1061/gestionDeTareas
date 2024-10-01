@@ -50,6 +50,8 @@
     flex-direction: column;
     padding: 1rem 2rem;
     &__person{
+      padding-top: 25px;
+      border-bottom: 1px solid black;
       width: 100%;
     }
   }
@@ -59,13 +61,14 @@
     align-self: flex-end;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1300px) {
     &__persons{
-      flex-direction: row;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 2rem;
       &__person{
         width:auto;
+        border: none;
         border-right: 1px solid black;
         padding-right: 25px;
       }
