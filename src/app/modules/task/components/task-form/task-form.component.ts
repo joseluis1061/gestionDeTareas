@@ -16,6 +16,7 @@ export class TaskFormComponent {
   public formTask: FormGroup = new FormGroup({});
   taskUpdate: ITask | null = null;
   title: string = "Crear tarea";
+  titlePersons: string = "Personas encargadas";
 
   constructor(
     private taskService: TaskService,
@@ -108,8 +109,22 @@ export class TaskFormComponent {
     if (persons && persons.length > 0) {
       const existingNames = persons.controls.map(personForm => personForm.get('personName')?.value);
       const uniqueNames = [...new Set(existingNames)];
+      this.titlePersons= "Personas encargadas";
       return uniqueNames.length < persons.length ? { duplicateNames: true } : null;
     }
+    this.titlePersons= "Debes agregar al menos una persona";
+    return null;
+  }
+
+  validateOneSkill(): ValidationErrors | null {
+    const persons = this.formTask.get('persons') as FormArray;
+    if (persons && persons.length > 0) {
+      const existingNames = persons.controls.map(personForm => personForm.get('personName')?.value);
+      const uniqueNames = [...new Set(existingNames)];
+      this.titlePersons= "Personas encargadas";
+      return uniqueNames.length < persons.length ? { duplicateNames: true } : null;
+    }
+    this.titlePersons= "Debes agregar al menos una persona";
     return null;
   }
 

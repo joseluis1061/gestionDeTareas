@@ -38,7 +38,7 @@
       </div>
 
       <hr>
-      <p>Personas encargadas</p>
+      <p>{{titlePersons}}</p>
 
       <div class="form-grid" formArrayName="persons">
 
@@ -81,6 +81,7 @@
               </div>
             </div>
 
+            <p>Agrega al menos una habilidad</p>
             <div class="form-grid" formArrayName="personSkills">
               <div *ngFor="let skill of person.get('personSkills').controls; index as skillFormReference">
                 <div class="form-field-compose">
