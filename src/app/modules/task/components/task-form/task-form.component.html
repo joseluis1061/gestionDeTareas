@@ -11,10 +11,10 @@
         />
 
         <div *ngIf="formTask.get('taskName')?.invalid && formTask.get('taskName')?.touched" >
-          <div *ngIf="formTask.get('taskName')?.hasError('minlength')" style="color: red;">
+          <div *ngIf="formTask.get('taskName')?.hasError('minlength')" class="alert-danger">
             El nombre debe tener al menos 5 caracteres.
           </div>
-          <div *ngIf="formTask.get('taskName')?.hasError('required')" style="color: red;">
+          <div *ngIf="formTask.get('taskName')?.hasError('required')" class="alert-danger">
             Este campo es requerido.
           </div>
         </div>
@@ -28,21 +28,22 @@
         />
 
         <div *ngIf="formTask.get('taskDate')?.invalid && formTask.get('taskDate')?.touched" >
-          <div *ngIf="formTask.get('taskDate')?.hasError('dateValidator')" style="color: red;">
+          <div *ngIf="formTask.get('taskDate')?.hasError('dateValidator')" class="alert-danger">
             La fecha debe tener dia/mes/año.
           </div>
-          <div *ngIf="formTask.get('taskDate')?.hasError('required')" style="color: red;">
+          <div *ngIf="formTask.get('taskDate')?.hasError('required')" class="alert-danger">
             Este campo es requerido.
           </div>
         </div>
       </div>
 
       <hr>
+      <p>Personas encargadas</p>
 
       <div class="form-grid" formArrayName="persons">
 
-        <div class="form-field" *ngFor="let person of getCtrl('persons', formTask).controls; index as formChild" >
-          <div class="form-block" [formGroupName]="formChild">
+        <div class="form-field form-person-field" *ngFor="let person of getCtrl('persons', formTask).controls; index as formChild" >
+          <div class="form-block form-person" [formGroupName]="formChild">
             <div class="form-field">
               <input
                 type="text"
@@ -51,11 +52,14 @@
               />
 
               <div *ngIf="person.get('personName')?.invalid && person.get('personName')?.touched" >
-                <div *ngIf="person.get('personName')?.hasError('minlength')" style="color: red;">
+                <div *ngIf="person.get('personName')?.hasError('minlength')" class="alert-danger">
                   El nombre debe tener al menos 5 caracteres.
                 </div>
-                <div *ngIf="person.get('personName')?.hasError('required')" style="color: red;">
+                <div *ngIf="person.get('personName')?.hasError('required')" class="alert-danger">
                   Este campo es requerido.
+                </div>
+                <div *ngIf="person.get('personName')?.hasError('duplicateNames')" class="alert-danger">
+                  El nombre ya fue agregado.
                 </div>
               </div>
             </div>
@@ -68,10 +72,10 @@
               />
 
               <div *ngIf="person.get('age')?.invalid && person.get('age')?.touched" >
-                <div *ngIf="person.get('age')?.hasError('min')" style="color: red;">
+                <div *ngIf="person.get('age')?.hasError('min')" class="alert-danger">
                   Debe ser mayor de 18 años.
                 </div>
-                <div *ngIf="person.get('age')?.hasError('required')" style="color: red;">
+                <div *ngIf="person.get('age')?.hasError('required')" class="alert-danger">
                   Este campo es requerido.
                 </div>
               </div>
@@ -90,6 +94,14 @@
                   </button>
                 </div>
 
+                <div *ngIf="skill.invalid && skill.touched" >
+                  <div *ngIf="person.hasError('minlength')" class="alert-danger">
+                    El nombre debe tener al menos 5 caracteres.
+                  </div>
+                  <div *ngIf="skill.hasError('required')" class="alert-danger">
+                    Este campo es requerido.
+                  </div>
+                </div>
               </div>
             </div>
 

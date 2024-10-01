@@ -54,7 +54,7 @@ export class TaskFormComponent {
 
   initFormPerson(): FormGroup {
     return new FormGroup({
-      personName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      personName: new FormControl('', [Validators.required, Validators.minLength(2), this.validateUniqueNames.bind(this)]),
       age: new FormControl('', [Validators.required, Validators.min(18)]),
       personSkills: new FormArray([], [Validators.required, Validators.minLength(1)])
     });
@@ -103,49 +103,19 @@ export class TaskFormComponent {
     return dateRegex.test(control.value) ? null : { fechaInvalida: true };
   }
 
-  validateUniqueNames(control: FormArray): ValidationErrors | null {
-    const personNames = control.controls.map(personForm => personForm.get('personName')?.value);
-    const uniqueNames = [...new Set(personNames)];
-
-    return uniqueNames.length < control.length ? { duplicateNames: true } : null;
-  }
-
-  // Update
-  updateFormTask(): void {
-    this.formTask = new FormGroup({
-      taskName: new FormControl(this.taskUpdate?.taskName, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      taskDate: new FormControl(this.taskUpdate?.taskDate, [Validators.required]),
-      persons: new FormArray([], [Validators.required, this.validateUniqueNames.bind(this)])
-    });
-  }
-
-  updateFormPerson() {
-    this.taskUpdate?.persons.forEach(person => {
-      return new FormGroup({
-        personName: new FormControl(person.personName, [Validators.required]),
-        age: new FormControl(person.age, [Validators.required, Validators.min(18)]),
-        personSkills: new FormArray([], [Validators.required, Validators.minLength(1)])
-      });
-    })
-
-  }
-
-  updateFormSkill() {
-    this.taskUpdate?.persons.forEach(person => {
-      return new FormGroup({
-        skill: new FormControl(person.personSkills, [Validators.required])
-      });
-    })
+  validateUniqueNames(): ValidationErrors | null {
+    const persons = this.formTask.get('persons') as FormArray;
+    if (persons && persons.length > 0) {
+      const existingNames = persons.controls.map(personForm => personForm.get('personName')?.value);
+      const uniqueNames = [...new Set(existingNames)];
+      return uniqueNames.length < persons.length ? { duplicateNames: true } : null;
+    }
+    return null;
   }
 
   onSubmit() {
-    // console.warn(this.formTask.value);
     if (!this.formTask.valid) {
       alert("Verifica tus campos");
-
       return;
     }
     const taskData = this.formTask.value;
@@ -164,6 +134,36 @@ export class TaskFormComponent {
           console.error('Error al crear la tarea:', error);
         }
     });
-
   }
 }
+
+// Update
+// updateFormTask(): void {
+//   this.formTask = new FormGroup({
+//     taskName: new FormControl(this.taskUpdate?.taskName, [
+//       Validators.required,
+//       Validators.minLength(3),
+//     ]),
+//     taskDate: new FormControl(this.taskUpdate?.taskDate, [Validators.required]),
+//     persons: new FormArray([], [Validators.required, this.validateUniqueNames.bind(this)])
+//   });
+// }
+
+// updateFormPerson() {
+//   this.taskUpdate?.persons.forEach(person => {
+//     return new FormGroup({
+//       personName: new FormControl(person.personName, [Validators.required]),
+//       age: new FormControl(person.age, [Validators.required, Validators.min(18)]),
+//       personSkills: new FormArray([], [Validators.required, Validators.minLength(1)])
+//     });
+//   })
+
+// }
+
+// updateFormSkill() {
+//   this.taskUpdate?.persons.forEach(person => {
+//     return new FormGroup({
+//       skill: new FormControl(person.personSkills, [Validators.required])
+//     });
+//   })
+// }
