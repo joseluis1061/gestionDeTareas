@@ -1,0 +1,83 @@
+.formtask{
+  padding: 2rem 2rem;
+  background-color: var(--gray);
+  h2{
+    margin-bottom: 2rem;
+    font-weight: 700;
+    display: block;
+  }
+
+  .formtask__wrapper {
+    // margin: 5rem 2.5rem 2.5rem 2.5rem;
+    background-color: var(--white);
+    padding: .5rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+    gap: 1rem;
+    min-height: 80vh;
+    max-width: 850px;
+    border: solid 2px #1a1a1a;
+    width: 100%;
+    .form {
+      height: 100%;
+      padding: .5rem;
+      border-radius: 5px;
+
+      &-field {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      &-field input {
+        margin: .5rem 0;
+        border: solid 2px #1a1a1a;
+        border-radius: 5px;
+        width: 100%;
+      }
+
+      &-field-compose{
+        display: flex;
+      }
+      &-field-compose input {
+        margin: 0;
+        border: solid 2px #1a1a1a;
+        border-radius: 5px;
+        width: 90%;
+      }
+
+      &-person-controls{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      &-field-compose-btn{
+        width: 10%;
+        fa-icon{
+          color: var(--danger);
+        }
+      }
+
+      &-grid {
+        display: flex;
+        flex-wrap: wrap;
+        padding: .5rem;
+        gap: .5rem;
+        border-radius: 5px;
+      }
+
+      &-person-field{
+        width: 100%;
+      }
+      &-block {
+        padding: .5rem;
+        background-color: var(--gray);
+        border-radius: 5px;
+        width: 100%;
+      }
+
+
+    }
+
+  }
+}

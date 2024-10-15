@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { TaskService } from 'src/app/core/service/task.service';
-import { ActivatedRoute } from '@angular/router';
 import { ITask } from 'src/app/models/task.model';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { IPerson } from 'src/app/models/person.model';
 import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-task-form',
@@ -25,23 +23,7 @@ export class TaskFormComponent {
   ){}
 
   ngOnInit(): void {
-    this.taskService.taskSelectedState$.subscribe({
-      next: param => {
-        this.taskUpdate = param;
-        console.log("Update: ",this.taskUpdate);
-        console.log("Update: ",this.taskUpdate? true: false);
-      },
-      error: error => console.log("Algo salio mal en la actualización")
-    });
-
-    if(this.taskUpdate !== null){
-      console.log("Update formulario---");
-      //this.formTask.patchValue(this.taskUpdate);
-      this.initFormTask();
-    }else{
-      console.log("Crear el formulario");
-      this.initFormTask();
-    }
+    this.initFormTask();
   }
 
   initFormTask(): void {

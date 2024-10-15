@@ -3,7 +3,7 @@ import { TaskService } from 'src/app/core/service/task.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ITask } from 'src/app/models/task.model';
-
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-task-form-update',
   templateUrl: './task-form-update.component.html',
@@ -12,6 +12,13 @@ import { ITask } from 'src/app/models/task.model';
 export class TaskFormUpdateComponent implements OnInit, AfterViewInit{
   public formTask: FormGroup = new FormGroup({});
   taskData!: ITask;
+
+  faTrash = faTrash;
+  taskUpdate: ITask | null = null;
+  title: string = "Crear tarea";
+  titlePersons: string = "Personas encargadas";
+  titleSkills: string = "Habilidades";
+
 
   constructor(
     private taskService: TaskService,
@@ -49,31 +56,38 @@ export class TaskFormUpdateComponent implements OnInit, AfterViewInit{
       taskDate: [this.taskData.taskDate, [Validators.required]], //, this.dateValidator.bind(this)
       persons: this.fb.array([], [Validators.required])
     })
+
     if(this.taskData.persons.length > 0 ){
+      const personsFormArray = this.formTask.get('persons') as FormArray;
       this.taskData.persons.forEach(person => {
-        this.addPerson(person);
+        const personForm = this.fb.group({
+          personName: [person.personName, [Validators.required, Validators.minLength(2)]],
+          age: [person.age, [Validators.required, Validators.min(18)]],
+          personSkills: this.fb.array([], [Validators.required, Validators.minLength(1)])
+        });
+
+        const skillsFormArray = personForm.get('personSkills') as FormArray;
+        person.personSkills.forEach(skill => {
+          skillsFormArray.push(this.fb.control(skill, Validators.required));
+        });
+
+        personsFormArray.push(personForm);
       });
     }
   }
 
-  initFormPerson(person: any){
+  initFormPerson(){
     const personsForm = this.fb.group({
-      personName: [person.personName, [Validators.required, Validators.minLength(2)]],
-      age: [person.age, [Validators.required, Validators.min(18)]],
+      personName: ["", [Validators.required, Validators.minLength(2)]],
+      age: ["person.age", [Validators.required, Validators.min(18)]],
       personSkills: this.fb.array([], [Validators.required, Validators.minLength(1)])
     })
-    if(person.personSkills.length > 0){
-      const skillsFormArray = personsForm.get('personSkills') as FormArray;
-      person.personSkills.forEach((skill: any, index:number) => {
-        skillsFormArray.push(this.fb.control(skill, Validators.required));
-      })
-    }
     return personsForm;
   }
 
-  addPerson(person: any): void {
+  addPerson(): void {
     const refPersons = this.formTask.get('persons') as FormArray;
-    refPersons.push(this.initFormPerson(person));
+    refPersons.push(this.initFormPerson());
   }
 
   deletePerson(index: number): void {
@@ -88,11 +102,11 @@ export class TaskFormUpdateComponent implements OnInit, AfterViewInit{
     return skillForm;
   }
 
-  addSkill(index: number, skill: any) {
+  addSkill(index: number) {
     const personFormArray = this.formTask.get('persons') as FormArray;
     const personFormGroup = personFormArray.at(index) as FormGroup;
     const skillsFormArray = personFormGroup.get('personSkills') as FormArray;
-    skillsFormArray.push(new FormControl(skill, [Validators.required]));
+    skillsFormArray.push(new FormControl([], [Validators.required]));
   }
 
   removeSkill(indexPerson: number, indexSkill: number) {
