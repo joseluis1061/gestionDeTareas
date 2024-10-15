@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, numberAttribute } from '@angular/core';
 import { HttpClient }from '@angular/common/http';
 import { ITask } from 'src/app/models/task.model';
 import { BehaviorSubject, delay, Observable, of, map, tap } from 'rxjs';
@@ -25,6 +25,13 @@ export class TaskService {
 
   getTasks(): Observable<ITask[]> {
     return of(initTaskList).pipe(delay(1500))
+  }
+
+  getTasksById(id: number): Observable<ITask[]> {
+    const task = initTaskList.filter(item => {
+      return item.id === id;
+    })
+    return of(task).pipe(delay(1500))
   }
 
   createTask(task: ITask): Observable<any> {

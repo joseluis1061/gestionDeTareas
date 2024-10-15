@@ -24,6 +24,6 @@ export class TaskCardComponent {
 
   updateTask(){
     this.taskService.setTaskSelect(this.task);
-    this.router.navigate(['/tasks/new-task']);
+    this.router.navigate(['/tasks/update-task', this.task.id]);
   }
 }

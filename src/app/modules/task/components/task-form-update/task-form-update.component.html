@@ -2,7 +2,7 @@
   <h2>Crear tarea</h2>
   <div class="formtask__wrapper">
 
-    <form [formGroup]="formTask" class="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="formTask" class="form" (ngSubmit)="onSubmit()" *ngIf="taskData">
       <div class="form-field">
         <input
           type="text"
@@ -38,7 +38,7 @@
       </div>
 
       <hr>
-      <p>{{titlePersons}}</p>
+      <!-- <p>{{titlePersons}}</p> -->
 
       <div class="form-grid" formArrayName="persons">
 
@@ -81,7 +81,7 @@
               </div>
             </div>
 
-            <p>{{titleSkills}}</p>
+            <!-- <p>{{titleSkills}}</p> -->
             <div class="form-grid" formArrayName="personSkills">
               <div *ngFor="let skill of person.get('personSkills').controls; index as skillFormReference">
                 <div class="form-field-compose">
@@ -91,7 +91,7 @@
                     [formControlName]="skillFormReference"
                   />
                   <button class="form-btn form-field-compose-btn" (click)="removeSkill(formChild, skillFormReference)">
-                    <fa-icon [icon]="faTrash"></fa-icon>
+                    <!-- <fa-icon [icon]="faTrash"></fa-icon> -->
                   </button>
                 </div>
 
@@ -107,7 +107,7 @@
             </div>
 
             <div class="form-person-controls">
-              <button class="form-btn btn-success" (click)="addSkill(formChild)" type="button">Agregar Skill</button>
+              <!-- <button class="form-btn btn-success" (click)="addSkill(formChild)" type="button">Agregar Skill</button> -->
               <button class="form-btn btn-danger" (click)="deletePerson(formChild)" type="button">Eliminar Persona</button>
             </div>
 
@@ -116,7 +116,7 @@
       </div>
 
       <div class="task__controls">
-        <button (click)="addPerson()" type="button" class="form-btn btn-blue">Agregar Persona</button>
+        <!-- <button (click)="addPerson()" type="button" class="form-btn btn-blue">Agregar Persona</button> -->
         <!-- [disabled]="!formTask.valid" -->
         <button class="form-btn btn-black" type="submit">Crear tarea</button>
       </div>

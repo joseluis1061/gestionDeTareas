@@ -17,6 +17,7 @@ export class TaskFormComponent {
   taskUpdate: ITask | null = null;
   title: string = "Crear tarea";
   titlePersons: string = "Personas encargadas";
+  titleSkills: string = "Habilidades";
 
   constructor(
     private taskService: TaskService,
@@ -27,21 +28,20 @@ export class TaskFormComponent {
     this.taskService.taskSelectedState$.subscribe({
       next: param => {
         this.taskUpdate = param;
-        console.log(this.taskUpdate);
+        console.log("Update: ",this.taskUpdate);
+        console.log("Update: ",this.taskUpdate? true: false);
       },
       error: error => console.log("Algo salio mal en la actualización")
     });
 
-    this.initFormTask();
-    if(this.taskService === null){
-      console.log("Crear el formulario inicial")
+    if(this.taskUpdate !== null){
+      console.log("Update formulario---");
+      //this.formTask.patchValue(this.taskUpdate);
+      this.initFormTask();
+    }else{
+      console.log("Crear el formulario");
+      this.initFormTask();
     }
-    // else{
-    //   this.updateFormTask();
-    //   this.updateFormPerson();
-    //   this.updateFormSkill();
-    // }
-
   }
 
   initFormTask(): void {
@@ -77,7 +77,7 @@ export class TaskFormComponent {
     const personFormArray = this.formTask.get('persons') as FormArray;
     const personFormGroup = personFormArray.at(index) as FormGroup;
     const skillsFormArray = personFormGroup.get('personSkills') as FormArray;
-    skillsFormArray.push(new FormControl('', [Validators.required, Validators.min(3)]));
+    skillsFormArray.push(new FormControl([], [Validators.required]));
   }
 
   initFormSkill(): FormGroup {
@@ -118,13 +118,13 @@ export class TaskFormComponent {
 
   validateOneSkill(): ValidationErrors | null {
     const persons = this.formTask.get('persons') as FormArray;
+
     if (persons && persons.length > 0) {
-      const existingNames = persons.controls.map(personForm => personForm.get('personName')?.value);
-      const uniqueNames = [...new Set(existingNames)];
-      this.titlePersons= "Personas encargadas";
-      return uniqueNames.length < persons.length ? { duplicateNames: true } : null;
+      const existingNames = persons.controls.map(personForm => personForm.get('personSkills') as FormArray);
+      console.log("Skills", existingNames.length)
+      return existingNames.length > 0? {oneSkill: true} : null;
     }
-    this.titlePersons= "Debes agregar al menos una persona";
+    this.titleSkills= "Habilidades";
     return null;
   }
 
