@@ -1,5 +1,5 @@
 <section class="formtask">
-  <h2>Crear tarea</h2>
+  <h2>Actualizar tarea</h2>
   <div class="formtask__wrapper">
 
     <form [formGroup]="formTask" class="form" (ngSubmit)="onSubmit()" *ngIf="taskData">
@@ -107,7 +107,7 @@
             </div>
 
             <div class="form-person-controls">
-              <button class="form-btn btn-success" (click)="addSkill(formChild)" type="button">Agregar Skill</button>
+              <button class="form-btn btn-success" (click)="addSkill(formChild)" type="button">Actualizar Skill</button>
               <button class="form-btn btn-danger" (click)="deletePerson(formChild)" type="button">Eliminar Persona</button>
             </div>
 
@@ -118,7 +118,7 @@
       <div class="task__controls">
         <button (click)="addPerson()" type="button" class="form-btn btn-blue">Agregar Persona</button>
         <!-- [disabled]="!formTask.valid" -->
-        <button class="form-btn btn-black" type="submit">Crear tarea</button>
+        <button class="form-btn btn-black" type="submit">Actualizar tarea</button>
       </div>
 
 

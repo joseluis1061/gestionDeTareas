@@ -13,13 +13,13 @@ export class TaskFormComponent {
   faTrash = faTrash;
   public formTask: FormGroup = new FormGroup({});
   taskUpdate: ITask | null = null;
-  title: string = "Crear tarea";
+  title: string = "Actualizar tarea";
   titlePersons: string = "Personas encargadas";
   titleSkills: string = "Habilidades";
 
   constructor(
     private taskService: TaskService,
-    private formBuilder: FormBuilder
+    private fb: FormBuilder
   ){}
 
   ngOnInit(): void {
@@ -27,19 +27,26 @@ export class TaskFormComponent {
   }
 
   initFormTask(): void {
-
-    this.formTask = new FormGroup({
-      taskName: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      taskDate: new FormControl('', [Validators.required]), //, this.dateValidator.bind(this)
-      persons: new FormArray([], [Validators.required, this.validateUniqueNames.bind(this)])
+    this.formTask = this.fb.group({
+      taskName: ['', [Validators.required, Validators.minLength(5)]],
+      taskDate: ['', [Validators.required]], //, this.dateValidator.bind(this)
+      persons: this.fb.array([], [Validators.required, this.validateUniqueNames.bind(this)])
     });
+
+    const personFormArray = this.formTask.get('persons') as FormArray;
+    personFormArray.push(this.initFormPerson());
+
+    const personFormGroup = personFormArray.at(0) as FormGroup;
+    const skillsFormArray = personFormGroup.get('personSkills') as FormArray;
+    skillsFormArray.push(new FormControl([], [Validators.required]));
+
   }
 
   initFormPerson(): FormGroup {
-    return new FormGroup({
-      personName: new FormControl('', [Validators.required, Validators.minLength(2), this.validateUniqueNames.bind(this)]),
-      age: new FormControl('', [Validators.required, Validators.min(18)]),
-      personSkills: new FormArray([], [Validators.required, Validators.minLength(1)])
+    return this.fb.group({
+      personName: ['', [Validators.required, Validators.minLength(2), this.validateUniqueNames.bind(this)]],
+      age: ['', [Validators.required, Validators.min(18)]],
+      personSkills: this.fb.array([], [Validators.required, Validators.minLength(1)])
     });
   }
 

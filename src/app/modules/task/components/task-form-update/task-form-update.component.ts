@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/core/service/task.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ITask } from 'src/app/models/task.model';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 @Component({
@@ -18,17 +18,19 @@ export class TaskFormUpdateComponent implements OnInit, AfterViewInit{
   title: string = "Crear tarea";
   titlePersons: string = "Personas encargadas";
   titleSkills: string = "Habilidades";
+  id!: number ;
 
 
   constructor(
     private taskService: TaskService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ){
     this.route.params.subscribe((response: Params) => {
       console.log("ID: ", response['id']);
-      const id = response['id'];
-      this.getTaskById(id);
+      this.id = parseInt(response['id']) ;
+      this.getTaskById(this.id);
     })
   }
   ngAfterViewInit(): void {
@@ -39,18 +41,18 @@ export class TaskFormUpdateComponent implements OnInit, AfterViewInit{
 
   }
 
-  getTaskById(id: string){
-    this.taskService.getTasksById(parseInt(id)).subscribe({
+  getTaskById(id: number){
+    this.taskService.getTasksById(id).subscribe({
       next: (response) => {
         this.taskData = response[0];
         console.log("TAREA: ", this.taskData);
-        this.initFormTask();
+        this.initUpdateFormTask();
       },
       error: error => console.log("Error llamando a tarea by id: ", error)
     });
   }
 
-  initFormTask(){
+  initUpdateFormTask(){
     this.formTask = this.fb.group({
       taskName: [this.taskData.taskName, [Validators.required, Validators.minLength(5)]],
       taskDate: [this.taskData.taskDate, [Validators.required]], //, this.dateValidator.bind(this)
@@ -95,7 +97,7 @@ export class TaskFormUpdateComponent implements OnInit, AfterViewInit{
     personsFormArray.removeAt(index);
   }
 
-  initSkills(){
+  initFormSkill(){
     const skillForm = this.fb.group({
       skill: ['', [Validators.required]]
     })
@@ -122,7 +124,23 @@ export class TaskFormUpdateComponent implements OnInit, AfterViewInit{
   }
 
   onSubmit(){
-    console.log("Enviar Actualizacion: ", this.formTask.value)
+    if (!this.formTask.valid) {
+      alert("Verifica tus campos");
+      return;
+    }
+    const taskData = this.formTask.value;
+    taskData.id = this.id;
+    taskData.complete = false;
+    this.taskService.updateTask(taskData)
+      .subscribe({
+        next: (response) => {
+          this.router.navigate(['/tasks']);
+        },
+        error: (error) => {
+          alert("Verifica tus campos");
+          console.error('Error al crear la tarea:', error);
+        }
+    });
   }
 
 }

@@ -24,7 +24,10 @@ export class TaskService {
 
 
   getTasks(): Observable<ITask[]> {
-    return of(initTaskList).pipe(delay(1500))
+    console.log("ME LLAMas")
+    this.taskList = initTaskList;
+    this.taskListState.next(initTaskList) ;
+    return of(this.taskList).pipe(delay(1500))
   }
 
   getTasksById(id: number): Observable<ITask[]> {
@@ -49,14 +52,17 @@ export class TaskService {
   }
 
   updateTask(task: ITask){
+    console.log("LOQUE LLEGA: ", task)
     const targetTask = this.taskList.map(item => {
       if(item.id !== task.id){
+        console.log(":::",task.id)
         return item;
       }
       return task;
     });
-    this.taskList = targetTask;
-    this.taskListState.next(this.taskList);
+    this.taskListState.next(targetTask);
+    console.log("Actualiza esto: ", targetTask)
+    return of(task).pipe(delay(600))
   }
 
   addTask(tasks: ITask){
