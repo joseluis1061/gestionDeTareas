@@ -1,13 +1,16 @@
 <section class="task">
 
-  <div class="task-filters">
+
+  <div class="task__filters">
     <li class="task__filters__option" (click)="taskReset()">Todas</li>
     <li class="task__filters__option" (click)="taskFilterComplete()">Completadas</li>
     <li class="task__filters__option" (click)="taskFilterPending()">Pendientes</li>
   </div>
 
+  <h2 class="task__title">{{title}}</h2>
 
-  <div class="task-list">
-    <app-task-card [taskListView]="taskListView" class="task-list-item"></app-task-card>
+
+  <div class="task-list" >
+    <app-task-card *ngFor="let task of taskListView"  [task]="task" class="task-list-item"></app-task-card>
   </div>
 </section>

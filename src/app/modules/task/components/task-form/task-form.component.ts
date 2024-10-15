@@ -1,22 +1,9 @@
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { TaskService } from 'src/app/core/service/task.service';
-import { ActivatedRoute } from '@angular/router';
 import { ITask } from 'src/app/models/task.model';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-
-interface TaskFormData {
-  taskName: string;
-  date: Date;
-  persons: PersonFormData[];
-}
-
-interface PersonFormData {
-  personName: string;
-  age: number;
-  personSkills: string[];
-}
-
+import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
@@ -25,34 +12,32 @@ interface PersonFormData {
 export class TaskFormComponent {
   faTrash = faTrash;
   public formTask: FormGroup = new FormGroup({});
-  taskUpdate!: ITask;
+  taskUpdate: ITask | null = null;
+  title: string = "Crear tarea";
+  titlePersons: string = "Personas encargadas";
+  titleSkills: string = "Habilidades";
 
   constructor(
-    private taskService:TaskService,
-    private route: ActivatedRoute
+    private taskService: TaskService,
+    private formBuilder: FormBuilder
   ){}
 
   ngOnInit(): void {
-    // this.taskUpdate = this.route.snapshot.data['state'].task;
-    // console.log("Actualizar: ", this.taskUpdate);
     this.initFormTask();
   }
 
   initFormTask(): void {
+
     this.formTask = new FormGroup({
-      taskName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      taskDate: new FormControl('', [Validators.required]),
+      taskName: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      taskDate: new FormControl('', [Validators.required]), //, this.dateValidator.bind(this)
       persons: new FormArray([], [Validators.required, this.validateUniqueNames.bind(this)])
     });
   }
 
   initFormPerson(): FormGroup {
-    // Retorna el formulario que estará anidado
     return new FormGroup({
-      personName: new FormControl('', [Validators.required]),
+      personName: new FormControl('', [Validators.required, Validators.minLength(2), this.validateUniqueNames.bind(this)]),
       age: new FormControl('', [Validators.required, Validators.min(18)]),
       personSkills: new FormArray([], [Validators.required, Validators.minLength(1)])
     });
@@ -74,7 +59,7 @@ export class TaskFormComponent {
     const personFormArray = this.formTask.get('persons') as FormArray;
     const personFormGroup = personFormArray.at(index) as FormGroup;
     const skillsFormArray = personFormGroup.get('personSkills') as FormArray;
-    skillsFormArray.push(new FormControl('', [Validators.required, Validators.min(3)]));
+    skillsFormArray.push(new FormControl([], [Validators.required]));
   }
 
   initFormSkill(): FormGroup {
@@ -101,16 +86,31 @@ export class TaskFormComponent {
     return dateRegex.test(control.value) ? null : { fechaInvalida: true };
   }
 
-  validateUniqueNames(control: FormArray): ValidationErrors | null {
-    const personNames = control.controls.map(personForm => personForm.get('personName')?.value);
-    const uniqueNames = [...new Set(personNames)];
+  validateUniqueNames(): ValidationErrors | null {
+    const persons = this.formTask.get('persons') as FormArray;
+    if (persons && persons.length > 0) {
+      const existingNames = persons.controls.map(personForm => personForm.get('personName')?.value);
+      const uniqueNames = [...new Set(existingNames)];
+      this.titlePersons= "Personas encargadas";
+      return uniqueNames.length < persons.length ? { duplicateNames: true } : null;
+    }
+    this.titlePersons= "Debes agregar al menos una persona";
+    return null;
+  }
 
-    return uniqueNames.length < control.length ? { duplicateNames: true } : null;
+  validateOneSkill(): ValidationErrors | null {
+    const persons = this.formTask.get('persons') as FormArray;
+
+    if (persons && persons.length > 0) {
+      const existingNames = persons.controls.map(personForm => personForm.get('personSkills') as FormArray);
+      console.log("Skills", existingNames.length)
+      return existingNames.length > 0? {oneSkill: true} : null;
+    }
+    this.titleSkills= "Habilidades";
+    return null;
   }
 
   onSubmit() {
-    console.log("ENVIAR")
-    // console.warn(this.formTask.value);
     if (!this.formTask.valid) {
       alert("Verifica tus campos");
       return;
@@ -131,6 +131,36 @@ export class TaskFormComponent {
           console.error('Error al crear la tarea:', error);
         }
     });
-
   }
 }
+
+// Update
+// updateFormTask(): void {
+//   this.formTask = new FormGroup({
+//     taskName: new FormControl(this.taskUpdate?.taskName, [
+//       Validators.required,
+//       Validators.minLength(3),
+//     ]),
+//     taskDate: new FormControl(this.taskUpdate?.taskDate, [Validators.required]),
+//     persons: new FormArray([], [Validators.required, this.validateUniqueNames.bind(this)])
+//   });
+// }
+
+// updateFormPerson() {
+//   this.taskUpdate?.persons.forEach(person => {
+//     return new FormGroup({
+//       personName: new FormControl(person.personName, [Validators.required]),
+//       age: new FormControl(person.age, [Validators.required, Validators.min(18)]),
+//       personSkills: new FormArray([], [Validators.required, Validators.minLength(1)])
+//     });
+//   })
+
+// }
+
+// updateFormSkill() {
+//   this.taskUpdate?.persons.forEach(person => {
+//     return new FormGroup({
+//       skill: new FormControl(person.personSkills, [Validators.required])
+//     });
+//   })
+// }

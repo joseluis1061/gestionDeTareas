@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, numberAttribute } from '@angular/core';
 import { HttpClient }from '@angular/common/http';
 import { ITask } from 'src/app/models/task.model';
-import { BehaviorSubject, delay, Observable, of } from 'rxjs';
+import { BehaviorSubject, delay, Observable, of, map, tap } from 'rxjs';
 import { initTaskList } from '../data/initTaskList.data';
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,10 @@ export class TaskService {
   private taskListState = new BehaviorSubject<ITask[]>([]);
   public taskListState$ =this.taskListState.asObservable();
 
+  // private taskSelect!: ITask;
+  private taskSelectedState = new BehaviorSubject<ITask | null>(null);
+  public taskSelectedState$ =this.taskSelectedState.asObservable();
+
 
   constructor(
     private http: HttpClient
@@ -23,9 +27,20 @@ export class TaskService {
     return of(initTaskList).pipe(delay(1500))
   }
 
+  getTasksById(id: number): Observable<ITask[]> {
+    const task = initTaskList.filter(item => {
+      return item.id === id;
+    })
+    return of(task).pipe(delay(1500))
+  }
+
   createTask(task: ITask): Observable<any> {
     console.log("CreateTaskService: ", task)
-    return this.http.post(`${this.baseUrl}/posts`, task);
+    return this.http.post<ITask>(`${this.baseUrl}/posts`, task).pipe(
+      tap(response => {
+        response.id = Math.floor(Math.random() * (99999999 - 2 + 1)) + 2;
+      })
+    );
   }
 
   updateTaskList(tasks: ITask[]) {
@@ -47,6 +62,10 @@ export class TaskService {
   addTask(tasks: ITask){
     this.taskList.push(tasks);
     this.taskListState.next(this.taskList);
+  }
+
+  setTaskSelect(data: ITask) {
+    this.taskSelectedState.next(data);
   }
 
 }

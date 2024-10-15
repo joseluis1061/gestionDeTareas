@@ -2,7 +2,7 @@
   <h2>Crear tarea</h2>
   <div class="formtask__wrapper">
 
-    <form [formGroup]="formTask" class="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="formTask" class="form" (ngSubmit)="onSubmit()" *ngIf="taskData">
       <div class="form-field">
         <input
           type="text"

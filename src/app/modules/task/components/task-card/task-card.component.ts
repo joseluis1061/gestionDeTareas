@@ -9,16 +9,12 @@ import { ITask } from 'src/app/models/task.model';
   styleUrls: ['./task-card.component.scss']
 })
 export class TaskCardComponent {
-  @Input() taskListView: ITask[] = [];
+  @Input() task!: ITask;
 
   constructor(
     private taskService:TaskService,
     private router: Router
   ){}
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   throw new Error('Method not implemented.');
-  // }
 
   changeTaskCompleteState(task: ITask){
     console.log("Cambiar estado a la tarea: ", task);
@@ -26,10 +22,8 @@ export class TaskCardComponent {
     this.taskService.updateTask(task);
   }
 
-  updateTask(task: ITask){
-    console.log("Actualizar: ", task);
-    this.router.navigate(['/tasks/new-task'], { state: { task } });
+  updateTask(){
+    this.taskService.setTaskSelect(this.task);
+    this.router.navigate(['/tasks/update-task', this.task.id]);
   }
-
-
 }

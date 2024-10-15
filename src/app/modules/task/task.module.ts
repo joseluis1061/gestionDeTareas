@@ -12,12 +12,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { TaskCardComponent } from './components/task-card/task-card.component';
+import { TaskFormUpdateComponent } from './components/task-form-update/task-form-update.component';
 
 @NgModule({
   declarations: [
     TaskListComponent,
     TaskFormComponent,
-    TaskCardComponent
+    TaskCardComponent,
+    TaskFormUpdateComponent
   ],
   imports: [
     CommonModule,

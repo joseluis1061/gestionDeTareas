@@ -12,6 +12,8 @@
   --success-dark: rgb(47, 255, 186);
   --danger: rgb(190, 64, 33);
   --danger-dark:rgb(255, 89, 47);
+
+  --banner-height: 50px;
 }
 
 html {
@@ -94,19 +96,23 @@ li{
 }
 button{
   cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
 }
 
 section{
   height: auto;
-  min-height: 100vh;
-  width: 100%;
+  min-height: calc(100vh - var(--banner-height));
+  // margin-top: var(--banner-height);
+  width: 100vw;
 }
 
 .btn{
   padding: 1em 2em;
-  border: 1px solid white;
+  border: 1px solid transparent;
   border-radius: 25px;
   transition: all 0.5s ease;
+  height: 50px;
 }
 
 .active--link{
@@ -162,5 +168,6 @@ section{
 }
 
 .alert-danger{
-  background-color: #ffaba5;
+  background-color: #e9d3d2;
+  color: var(--danger);
 }
